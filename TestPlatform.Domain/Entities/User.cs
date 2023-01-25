@@ -5,11 +5,9 @@ namespace TestPlatform.Domain.Entities;
 
 public class User : IdentityUser<int>
 {
-    [Required]
     public string FirstName { get; set; }
 
-    [Required]
     public string LastName { get; set; }
 
-    public List<Test> Tests { get; set; } = new List<Test>();
+    public IEnumerable<UserTest> UserTests { get; set; } = new List<UserTest>();
 }

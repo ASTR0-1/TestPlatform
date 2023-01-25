@@ -6,20 +6,13 @@ public class Test
 {
     public int Id { get; set; }
 
-    [Required]
     public string Title { get; set; }
 
-    [Required]
     public string Description { get; set; }
 
-    [Required]
     public int QuestionCount { get; set; }
 
-    public bool IsCompleted { get; set; } = false;
+    public IEnumerable<Question> Questions { get; set; } = new List<Question>();
 
-    public int UserId { get; set; }
-
-    public User User { get; set; } 
-
-    public List<Question> Questions { get; set; }
+    public IEnumerable<UserTest> UserTests { get; set; } = new List<UserTest>();
 }
