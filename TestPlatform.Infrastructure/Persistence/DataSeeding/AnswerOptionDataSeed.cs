@@ -25,14 +25,16 @@ public class AnswerOptionDataSeed : IEntityTypeConfiguration<AnswerOption>
             QuestionId = 1,
         });
         builder.HasData(new AnswerOption()
-        {Id = 3,
+        {
+            Id = 3,
             OptionNumber = 3,
             OptionText = "OptionText3",
             IsCorrect = false,
             QuestionId = 1,
         });
         builder.HasData(new AnswerOption()
-        {Id = 4,
+        {
+            Id = 4,
             OptionNumber = 4,
             OptionText = "OptionText4",
             IsCorrect = false,
@@ -74,7 +76,7 @@ public class AnswerOptionDataSeed : IEntityTypeConfiguration<AnswerOption>
 
         builder.HasData(new AnswerOption()
         {
-                Id = 9,
+            Id = 9,
             OptionNumber = 1,
             OptionText = "OptionText1",
             IsCorrect = false,
@@ -167,7 +169,7 @@ public class AnswerOptionDataSeed : IEntityTypeConfiguration<AnswerOption>
         });
         builder.HasData(new AnswerOption()
         {
-                Id = 20,
+            Id = 20,
             OptionNumber = 3,
             OptionText = "OptionText3",
             IsCorrect = false,

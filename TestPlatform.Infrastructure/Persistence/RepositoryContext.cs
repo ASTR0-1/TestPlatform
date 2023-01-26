@@ -8,8 +8,8 @@ namespace TestPlatform.Infrastructure.Persistence;
 
 public class RepositoryContext : IdentityDbContext<User, IdentityRole<int>, int>
 {
-    public RepositoryContext(DbContextOptions<RepositoryContext> options) 
-        : base(options) 
+    public RepositoryContext(DbContextOptions<RepositoryContext> options)
+        : base(options)
     {
     }
 

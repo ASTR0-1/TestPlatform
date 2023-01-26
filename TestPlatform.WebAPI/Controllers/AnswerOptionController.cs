@@ -12,7 +12,7 @@ public class AnswerOptionController : ControllerBase
 {
     private readonly IAnswerOptionService _answerOptionService;
 
-	public AnswerOptionController(IAnswerOptionService answerOptionService)
+    public AnswerOptionController(IAnswerOptionService answerOptionService)
     {
         _answerOptionService = answerOptionService;
     }
@@ -26,7 +26,7 @@ public class AnswerOptionController : ControllerBase
         {
             answerOptions = await _answerOptionService.GetByQuestionId(questionId);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }

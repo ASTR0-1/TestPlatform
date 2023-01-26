@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using TestPlatform.Application.Interfaces.Data;
 
 namespace TestPlatform.Infrastructure.Persistence.Repositories;

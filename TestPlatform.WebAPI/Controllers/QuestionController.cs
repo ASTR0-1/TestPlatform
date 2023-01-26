@@ -26,7 +26,7 @@ public class QuestionController : ControllerBase
         {
             questions = await _questionService.GetByTestId(testId);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }

@@ -2,7 +2,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using TestPlatform.Application.Helpers;
 using TestPlatform.Application.Interfaces.Data;
@@ -52,7 +51,7 @@ public class Program
         services.AddAuthorization()
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddCookie()
-            .AddJwtBearer("Bearer",options =>
+            .AddJwtBearer("Bearer", options =>
             {
                 var jwtSettings = configuration.GetSection("JwtConfiguration").Get<JwtSettings>();
 

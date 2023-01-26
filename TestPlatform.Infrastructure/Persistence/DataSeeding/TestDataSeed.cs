@@ -15,7 +15,7 @@ public class TestDataSeed : IEntityTypeConfiguration<Test>
             Description = "Description for test1",
             QuestionCount = 4,
         });
-        
+
         builder.HasData(new Test()
         {
             Id = 2,

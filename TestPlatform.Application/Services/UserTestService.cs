@@ -44,7 +44,7 @@ public class UserTestService : IUserTestService
         if (userTest == null)
             throw new KeyNotFoundException();
 
-        UserTestDTO userTestDTO = _mapper.Map<UserTest,UserTestDTO>(userTest);
+        UserTestDTO userTestDTO = _mapper.Map<UserTest, UserTestDTO>(userTest);
 
         return userTestDTO;
     }

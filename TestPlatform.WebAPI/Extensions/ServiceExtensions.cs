@@ -1,7 +1,5 @@
-﻿using TestPlatform.Application.Interfaces.Data;
-using TestPlatform.Application.Interfaces.Service;
+﻿using TestPlatform.Application.Interfaces.Service;
 using TestPlatform.Application.Services;
-using TestPlatform.Infrastructure.Persistence;
 
 namespace TestPlatform.WebAPI.Extensions;
 

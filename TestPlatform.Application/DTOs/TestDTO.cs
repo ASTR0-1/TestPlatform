@@ -1,6 +1,4 @@
-﻿using TestPlatform.Domain.Entities;
-
-namespace TestPlatform.Application.DTOs;
+﻿namespace TestPlatform.Application.DTOs;
 
 public class TestDTO
 {

@@ -8,7 +8,7 @@ public class TestRepository : RepositoryBase<Test>, ITestRepository
 {
     public TestRepository(RepositoryContext context)
         : base(context)
-    {}
+    { }
 
     public void CreateTest(Test test) =>
         CreateTest(test);
@@ -27,7 +27,7 @@ public class TestRepository : RepositoryBase<Test>, ITestRepository
         await FindAll(trackChanges)
             .Include(t => t.UserTests)
             .Include(t => t.Questions)
-            .ToListAsync();    
+            .ToListAsync();
 
     public void UpdateTest(Test test) =>
         UpdateTest(test);

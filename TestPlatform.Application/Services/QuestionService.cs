@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
 using TestPlatform.Application.DTOs;
 using TestPlatform.Application.Interfaces.Data;
 using TestPlatform.Application.Interfaces.Service;

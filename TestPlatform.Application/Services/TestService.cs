@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
-using AutoMapper.Configuration.Conventions;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using TestPlatform.Application.DTOs;
 using TestPlatform.Application.Interfaces.Data;

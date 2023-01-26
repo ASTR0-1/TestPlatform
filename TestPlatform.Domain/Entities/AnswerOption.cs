@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TestPlatform.Domain.Entities;
+﻿namespace TestPlatform.Domain.Entities;
 
 public class AnswerOption
 {

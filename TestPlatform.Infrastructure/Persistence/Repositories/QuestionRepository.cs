@@ -8,7 +8,7 @@ public class QuestionRepository : RepositoryBase<Question>, IQuestionRepository
 {
     public QuestionRepository(RepositoryContext context)
         : base(context)
-    {}
+    { }
 
     public void CreateQuestion(Question question) =>
         Create(question);

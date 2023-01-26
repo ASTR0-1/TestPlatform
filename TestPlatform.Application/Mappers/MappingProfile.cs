@@ -6,16 +6,16 @@ namespace TestPlatform.Application.Mappers;
 
 public class MappingProfile : Profile
 {
-	public MappingProfile()
-	{
-		CreateMap<User, UserDTO>().ReverseMap();
+    public MappingProfile()
+    {
+        CreateMap<User, UserDTO>().ReverseMap();
 
-		CreateMap<Test, TestDTO>().ReverseMap();
+        CreateMap<Test, TestDTO>().ReverseMap();
 
-		CreateMap<Question, QuestionDTO>().ReverseMap();
+        CreateMap<Question, QuestionDTO>().ReverseMap();
 
-		CreateMap<AnswerOption, AnswerOptionDTO>().ReverseMap();
+        CreateMap<AnswerOption, AnswerOptionDTO>().ReverseMap();
 
-		CreateMap<UserTest, UserTestDTO>().ReverseMap();
-	}
+        CreateMap<UserTest, UserTestDTO>().ReverseMap();
+    }
 }

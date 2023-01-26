@@ -26,7 +26,7 @@ public class UserTestController : ControllerBase
         {
             if (idType == "testId")
                 userTest = await _userTestService.GetByTestIdAsync(id);
-            else 
+            else
                 userTest = await _userTestService.GetByUserIdAsync(id);
         }
         catch (Exception ex)
