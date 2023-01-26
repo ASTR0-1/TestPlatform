@@ -31,6 +31,7 @@ public class AuthService : IAuthService
         if (!isPasswordCorrect)
             throw new ArgumentException();
 
+        await _userManager.UpdateSecurityStampAsync(user);
         await _signInManager.SignInAsync(user, true);
 
         return user;
@@ -41,7 +42,7 @@ public class AuthService : IAuthService
         await _signInManager.SignOutAsync();
     }
 
-    public async Task SignUp(SignUpDTO entity)
+    public async Task<User> SignUp(SignUpDTO entity)
     {
         var user = new User
         {
@@ -63,6 +64,8 @@ public class AuthService : IAuthService
         if (currentUser == null)
             throw new KeyNotFoundException();
 
-        await _signInManager.SignInAsync(user, true);
+        await _signInManager.SignInAsync(currentUser, true);
+
+        return currentUser;
     }
 }

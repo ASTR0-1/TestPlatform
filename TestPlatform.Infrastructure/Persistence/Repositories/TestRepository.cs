@@ -20,6 +20,7 @@ public class TestRepository : RepositoryBase<Test>, ITestRepository
         await FindByCondition(t => t.Id == id, trackChanges)
             .Include(t => t.UserTests)
             .Include(t => t.Questions)
+                .ThenInclude(q => q.AnswerOptions)
             .SingleOrDefaultAsync();
 
     public async Task<IEnumerable<Test>> GetTestsAsync(bool trackChanges) =>

@@ -15,5 +15,7 @@ public class MappingProfile : Profile
 		CreateMap<Question, QuestionDTO>().ReverseMap();
 
 		CreateMap<AnswerOption, AnswerOptionDTO>().ReverseMap();
+
+		CreateMap<UserTest, UserTestDTO>().ReverseMap();
 	}
 }

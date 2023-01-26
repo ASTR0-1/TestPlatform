@@ -63,6 +63,7 @@ public class TestService : ITestService
         int result = CalculateTestResult(test, answers);
         userTest.Answers = String.Join("", answers);
         userTest.Rating = result;
+        userTest.FinishTime = DateTime.Now;
         userTest.IsCompleted = true;
 
         await _repository.SaveAsync();
