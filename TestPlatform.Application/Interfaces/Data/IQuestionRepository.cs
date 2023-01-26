@@ -17,5 +17,5 @@ public interface IQuestionRepository
 
     void UpdateQuestion(Question question);
 
-    void DeleteQuestion(int id);
+    void DeleteQuestion(Question question);
 }

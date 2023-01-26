@@ -12,5 +12,5 @@ public interface IAnswerOptionRepository
 
     void UpdateAnswerOption(AnswerOption answerOption);
 
-    void DeleteAnswerOption(int id);
+    void DeleteAnswerOption(AnswerOption answerOption);
 }

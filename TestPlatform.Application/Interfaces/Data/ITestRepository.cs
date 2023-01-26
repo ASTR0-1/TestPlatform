@@ -12,5 +12,5 @@ public interface ITestRepository
 
     void UpdateTest(Test test);
 
-    void DeleteTest(int id);
+    void DeleteTest(Test test);
 }
