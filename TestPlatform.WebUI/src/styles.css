@@ -1,0 +1,19 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+h1 {
+    font-size: 5.9vw;
+}
+
+h2 {
+    font-size: 3vh;
+}
+
+p {
+    font-size: 2vmin;
+}

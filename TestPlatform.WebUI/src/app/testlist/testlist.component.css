@@ -1,0 +1,6 @@
+.test-list-container {
+    background: gray;
+    color: white;
+    min-width: 30vw;
+    min-height: 5vh;
+}

@@ -36,14 +36,6 @@ public class AccountController : ControllerBase
             var roles = await _roleService.GetUserRoles(user.Email);
 
             token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
-
-            HttpContext.Response.Cookies.Append(".AspNetCore.Application.Id", token,
-                    new CookieOptions
-                    {
-                        MaxAge = TimeSpan.FromDays(Convert.ToDouble(_jwtSettings.Lifetime)),
-                        SameSite = SameSiteMode.None,
-                        Secure = true
-                    });
         }
         catch (Exception ex)
         {
@@ -66,14 +58,6 @@ public class AccountController : ControllerBase
             var roles = await _roleService.GetUserRoles(user.Email);
 
             token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
-
-            HttpContext.Response.Cookies.Append(".AspNetCore.Application.Id", token,
-                    new CookieOptions
-                    {
-                        MaxAge = TimeSpan.FromDays(Convert.ToDouble(_jwtSettings.Lifetime)),
-                        SameSite = SameSiteMode.None,
-                        Secure = true
-                    });
         }
         catch (Exception ex)
         {

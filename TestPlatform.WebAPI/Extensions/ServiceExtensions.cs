@@ -11,8 +11,8 @@ public static class ServiceExtensions
             opts.AddPolicy("CorsPolicy", builder =>
                 builder.AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowAnyOrigin()
-                .WithExposedHeaders("X-Pagination"));
+                .WithOrigins("http://localhost:4200")
+                .AllowCredentials());
         });
 
     public static void ConfigureEntityServices(this IServiceCollection services)

@@ -1,0 +1,5 @@
+<div *ngFor="let test of tests"
+    class="test-list-container container d-flex flex-row justify-content-center align-text-center mt-4 p-3 rounded gap-5">
+    <p class="m-0">{{test.title}}</p>
+    <button class="btn btn-info" (click)="confirm(test)">Start</button>
+</div>

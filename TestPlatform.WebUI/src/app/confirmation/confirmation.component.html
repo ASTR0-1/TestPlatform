@@ -1,0 +1,12 @@
+<div
+    class="confirmation-container container d-flex flex-column justify-content-center align-text-center mt-4 p-3 rounded gap-2">
+    <p>Are you sure you want to start this test?</p>
+    <p>Short test description: {{test?.description}}</p>
+    <div class="d-flex flex-row gap-4 align-text-center">
+        <div class="d-flex flex-row align-items-center gap-2">
+            <input type="checkbox" id="agreement" (change)="changeEvent()">
+            <label for="agrement">I agree to start</label>
+        </div>
+        <button class="btn btn-danger" [disabled]="toggleBool" (click)="proceed()">Proceed</button>
+    </div>
+</div>

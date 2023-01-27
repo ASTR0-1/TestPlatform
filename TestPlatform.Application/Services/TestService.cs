@@ -30,7 +30,7 @@ public class TestService : ITestService
         var allUserTests = await _repository.UserTest.GetUserTestsAsync(false);
 
         var sortedTests = allUserTests
-            .Where(ut => ut.User.Email == email)
+            .Where(ut => ut.User.Email == email && ut.IsCompleted == false)
             .Select(ut => ut.Test);
         if (sortedTests == null)
             throw new KeyNotFoundException();

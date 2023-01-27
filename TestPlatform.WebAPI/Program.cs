@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -27,6 +28,8 @@ public class Program
         services.AddDbContext<RepositoryContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("ProjectDB")));
 
+        services.ConfigureCors();
+
         services.ConfigureEntityServices();
         services.AddScoped<IRepositoryManager, RepositoryManager>();
         services.AddScoped<IAuthService, AuthService>();
@@ -43,6 +46,11 @@ public class Program
             .AddEntityFrameworkStores<RepositoryContext>()
             .AddDefaultTokenProviders();
 
+        services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.SameSite = SameSiteMode.None;
+        });
+
         services.Configure<DataProtectionTokenProviderOptions>(opt =>
         opt.TokenLifespan = TimeSpan.FromHours(1));
 
@@ -50,7 +58,6 @@ public class Program
 
         services.AddAuthorization()
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddCookie()
             .AddJwtBearer("Bearer", options =>
             {
                 var jwtSettings = configuration.GetSection("JwtConfiguration").Get<JwtSettings>();
@@ -81,6 +88,13 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseCors("CorsPolicy");
+
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.All
+        });
 
         app.UseAuthentication();
         app.UseAuthorization();
