@@ -22,17 +22,10 @@ public class UserTestController : ControllerBase
     {
         UserTestDTO userTest;
 
-        try
-        {
-            if (idType == "testId")
-                userTest = await _userTestService.GetByTestIdAsync(id);
-            else
-                userTest = await _userTestService.GetByUserIdAsync(id);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        if (idType == "testId")
+            userTest = await _userTestService.GetByTestIdAsync(id);
+        else
+            userTest = await _userTestService.GetByUserIdAsync(id);
 
         return Ok(userTest);
     }

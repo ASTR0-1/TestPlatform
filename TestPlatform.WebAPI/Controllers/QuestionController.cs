@@ -20,16 +20,7 @@ public class QuestionController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetByTestId([FromQuery] int testId)
     {
-        IEnumerable<QuestionDTO> questions;
-
-        try
-        {
-            questions = await _questionService.GetByTestId(testId);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        IEnumerable<QuestionDTO> questions= await _questionService.GetByTestId(testId);
 
         return Ok(questions);
     }

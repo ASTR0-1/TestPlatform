@@ -20,16 +20,7 @@ public class AnswerOptionController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetByQuestionId([FromQuery] int questionId)
     {
-        IEnumerable<AnswerOptionDTO> answerOptions;
-
-        try
-        {
-            answerOptions = await _answerOptionService.GetByQuestionId(questionId);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        IEnumerable<AnswerOptionDTO> answerOptions = await _answerOptionService.GetByQuestionId(questionId);
 
         return Ok(answerOptions);
     }

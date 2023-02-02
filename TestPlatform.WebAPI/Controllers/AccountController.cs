@@ -26,21 +26,10 @@ public class AccountController : ControllerBase
     [HttpPost("signIn")]
     public async Task<IActionResult> SignIn(SignInDTO signInDTO)
     {
-        User user;
-        string token;
+        User user = await _authService.SignIn(signInDTO);
+        var roles = await _roleService.GetUserRoles(user.Email);
 
-        try
-        {
-            user = await _authService.SignIn(signInDTO);
-
-            var roles = await _roleService.GetUserRoles(user.Email);
-
-            token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        string token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
 
         return Ok(new { user, token });
     }
@@ -48,21 +37,10 @@ public class AccountController : ControllerBase
     [HttpPost("signUp")]
     public async Task<IActionResult> SignUp(SignUpDTO signUpDTO)
     {
-        User user;
-        string token;
+        User user = await _authService.SignUp(signUpDTO);
+        var roles = await _roleService.GetUserRoles(user.Email);
 
-        try
-        {
-            user = await _authService.SignUp(signUpDTO);
-
-            var roles = await _roleService.GetUserRoles(user.Email);
-
-            token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        string token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
 
         return Ok(new { user, token });
     }
@@ -71,16 +49,9 @@ public class AccountController : ControllerBase
     [HttpGet("logout")]
     public async Task<IActionResult> Logout()
     {
-        try
-        {
-            await _authService.SignOut();
+        await _authService.SignOut();
 
-            Response.Cookies.Delete(".AspNetCore.Application.Id");
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        Response.Cookies.Delete(".AspNetCore.Application.Id");
 
         return Ok();
     }

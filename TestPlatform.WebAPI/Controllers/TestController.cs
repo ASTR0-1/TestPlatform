@@ -20,33 +20,15 @@ public class TestController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetByEmail([FromQuery] string userEmail)
     {
-        IEnumerable<TestDTO> tests;
-
-        try
-        {
-            tests = await _testService.GetByEmailAsync(userEmail);
-        }
-        catch
-        {
-            return BadRequest();
-        }
-
+        IEnumerable<TestDTO> tests = await _testService.GetByEmailAsync(userEmail);
+        
         return Ok(tests);
     }
 
     [HttpGet("result")]
     public async Task<IActionResult> GetResult([FromQuery] int testId, [FromQuery] string userEmail, [FromQuery] int[] answers)
     {
-        int result;
-
-        try
-        {
-            result = await _testService.GetResultAsync(testId, userEmail, answers);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        int result = await _testService.GetResultAsync(testId, userEmail, answers);
 
         return Ok(result);
     }
