@@ -31,8 +31,8 @@ export class LoginComponent {
                 }),
                 withCredentials: true,
             })
-            .subscribe(
-                (response) => {
+            .subscribe({
+                next: (response) => {
                     const token = (<any>response).token;
                     const userEmail = (<any>response).user.email;
                     const userName = (<any>response).user.firstName;
@@ -44,10 +44,10 @@ export class LoginComponent {
                     this.invalidLogin = false;
                     this.router.navigate(['']);
                 },
-                (err) => {
+                error: (err) => {
                     this.invalidLogin = true;
-                }
-            );
+                },
+            });
     };
 
     isUserAuthenticated() {

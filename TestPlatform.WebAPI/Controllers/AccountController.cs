@@ -24,7 +24,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("signIn")]
-    public async Task<IActionResult> SignIn(SignInDTO signInDTO)
+    public async Task<IActionResult> SignIn([FromBody] SignInDTO signInDTO)
     {
         User user = await _authService.SignIn(signInDTO);
         var roles = await _roleService.GetUserRoles(user.Email);
@@ -35,7 +35,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("signUp")]
-    public async Task<IActionResult> SignUp(SignUpDTO signUpDTO)
+    public async Task<IActionResult> SignUp([FromBody] SignUpDTO signUpDTO)
     {
         User user = await _authService.SignUp(signUpDTO);
         var roles = await _roleService.GetUserRoles(user.Email);
