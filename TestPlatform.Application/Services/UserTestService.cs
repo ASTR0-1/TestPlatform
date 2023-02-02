@@ -20,45 +20,45 @@ public class UserTestService : IUserTestService
         _userManager = userManager;
     }
 
-    public async Task<UserTestDTO> GetByTestIdAsync(int testId)
+    public async Task<IEnumerable<UserTestDTO>> GetByTestIdAsync(int testId)
     {
-        var userTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
-        UserTest userTest = userTests.Where(ut => ut.TestId == testId).FirstOrDefault();
+        var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
+        IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.TestId == testId);
 
-        if (userTest == null)
+        if (!userTests.Any())
             throw new KeyNotFoundException();
 
-        UserTestDTO userTestDTO = _mapper.Map<UserTest, UserTestDTO>(userTest);
+        IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 
-        return userTestDTO;
+        return userTestsDTO;
     }
 
-    public async Task<UserTestDTO> GetByUserEmailAsync(string email)
+    public async Task<IEnumerable<UserTestDTO>> GetByUserEmailAsync(string email)
     {
         User user = await _userManager.FindByEmailAsync(email);
         if (user == null)
             throw new KeyNotFoundException();
 
-        var userTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
-        UserTest userTest = userTests.Where(ut => ut.UserId == user.Id).FirstOrDefault();
-        if (userTest == null)
+        var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
+        IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.UserId == user.Id);
+        if (!userTests.Any())
             throw new KeyNotFoundException();
 
-        UserTestDTO userTestDTO = _mapper.Map<UserTest, UserTestDTO>(userTest);
+        IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 
-        return userTestDTO;
+        return userTestsDTO;
     }
 
-    public async Task<UserTestDTO> GetByUserIdAsync(int userId)
+    public async Task<IEnumerable<UserTestDTO>> GetByUserIdAsync(int userId)
     {
-        var userTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
-        UserTest userTest = userTests.Where(ut => ut.UserId == userId).FirstOrDefault();
+        var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
+        IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.UserId == userId);
 
-        if (userTest == null)
+        if (!userTests.Any())
             throw new KeyNotFoundException();
 
-        UserTestDTO userTestDTO = _mapper.Map<UserTest, UserTestDTO>(userTest);
+        IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 
-        return userTestDTO;
+        return userTestsDTO;
     }
 }
