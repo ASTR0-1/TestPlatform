@@ -81,6 +81,13 @@ public class Program
 
         var app = builder.Build();
 
+        using (IServiceScope serviceScope = app.Services.CreateScope())
+        {
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<RepositoryContext>();
+
+            dbContext.Database.Migrate();
+        }
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
