@@ -18,7 +18,7 @@ public class TestController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetByEmail([FromQuery] string userEmail)
+    public async Task<IActionResult> GetByUserEmail([FromQuery] string userEmail)
     {
         IEnumerable<TestDTO> tests = await _testService.GetByEmailAsync(userEmail);
         

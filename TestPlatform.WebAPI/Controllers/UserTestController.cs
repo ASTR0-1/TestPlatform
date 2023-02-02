@@ -17,16 +17,31 @@ public class UserTestController : ControllerBase
         _userTestService = userTestService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetByTestId([FromQuery] int id, [FromQuery] string idType)
+    [HttpGet("test")]
+    public async Task<IActionResult> GetByTestId([FromQuery] int testId)
     {
-        UserTestDTO userTest;
+        IEnumerable<UserTestDTO> userTests;
 
-        if (idType == "testId")
-            userTest = await _userTestService.GetByTestIdAsync(id);
-        else
-            userTest = await _userTestService.GetByUserIdAsync(id);
+        userTests = await _userTestService.GetByTestIdAsync(testId);
 
-        return Ok(userTest);
+        return Ok(userTests);
+    }
+
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetById(int userId)
+    {
+        IEnumerable<UserTestDTO> userTests;
+
+        userTests = await _userTestService.GetByUserIdAsync(userId);
+
+        return Ok(userTests);
+    }
+
+    [HttpGet("user")]
+    public async Task<IActionResult> GetByEmail([FromQuery] string userEmail)
+    {
+        IEnumerable<UserTestDTO> userTests = await _userTestService.GetByUserEmailAsync(userEmail);
+
+        return Ok(userTests);
     }
 }
