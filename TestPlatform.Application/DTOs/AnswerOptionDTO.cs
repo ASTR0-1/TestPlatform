@@ -6,7 +6,5 @@ public class AnswerOptionDTO
 
     public string OptionText { get; set; }
 
-    public bool IsCorrect { get; set; }
-
     public int QuestionId { get; set; }
 }
