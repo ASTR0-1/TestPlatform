@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using TestPlatform.Application.Helpers;
 using TestPlatform.Application.Interfaces.Data;
@@ -17,7 +18,7 @@ namespace TestPlatform.WebAPI;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -83,9 +84,24 @@ public class Program
 
         using (IServiceScope serviceScope = app.Services.CreateScope())
         {
-            var dbContext = serviceScope.ServiceProvider.GetRequiredService<RepositoryContext>();
+            var serviceProvider = serviceScope.ServiceProvider;
 
-            dbContext.Database.Migrate();
+            try
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<RepositoryContext>();
+
+                dbContext.Database.Migrate();
+
+                var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+                var rolesManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
+                var adminUser = await userManager.FindByEmailAsync("admin@gmail.com");
+                await userManager.AddToRoleAsync(adminUser, "Administrator");
+            }
+            catch (Exception ex)
+            {
+                app.Logger.Log(LogLevel.Warning, ex.Message);
+            }
         }
 
         if (app.Environment.IsDevelopment())

@@ -50,6 +50,15 @@ namespace TestPlatform.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "3e9ee344-862b-40a4-a1bd-f5e0dd1b78f3",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -596,7 +605,7 @@ namespace TestPlatform.Infrastructure.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a303d8e8-704c-44da-9e22-bd73c9b9a429",
+                            ConcurrencyStamp = "4c622711-0423-40c3-8e8d-3cd8fe0590ef",
                             Email = "email1@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "FN1",
@@ -604,9 +613,9 @@ namespace TestPlatform.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EMAIL1@GMAIL.COM",
                             NormalizedUserName = "EMAIL1@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIESGheWgdIBCiSpGCwPHZ9bIgmwVQKVzkqcqOIsxF9MCqB1YwZyuvZeU99Vi2FPhA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPpR/yIL8ZA8WgW8p7W7uxSnYOAbmKIohl7PbYYeAaIVmSsmMMN9wn859TbyDrRHxg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "007cb313-5eb8-496c-a109-8bab0d27b9bf",
+                            SecurityStamp = "227df544-2733-4d22-b0b5-c4dea1b57494",
                             TwoFactorEnabled = false,
                             UserName = "email1@gmail.com"
                         },
@@ -614,7 +623,7 @@ namespace TestPlatform.Infrastructure.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "783e436f-3d34-4fd1-9cdb-2021c285b716",
+                            ConcurrencyStamp = "6b241220-b3d0-4da5-a173-2b45d70a208a",
                             Email = "email2@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "FN2",
@@ -622,11 +631,29 @@ namespace TestPlatform.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EMAIL2@GMAIL.COM",
                             NormalizedUserName = "EMAIL2@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC+mxwyULfhm5NbEt4qmQvZYN5uXN+0eizxXJKl+c9TLQSoIoqtt5yHwUtDfjPUsow==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEACW5PZJSDzeC5BlkIJ63YgwgCnj8TZPZhXTynj1fg/7WvHTuUgeAmYfuJDNW+07hw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ebc0548d-c93a-4d9b-81c1-a2af32848e05",
+                            SecurityStamp = "b8c144df-3487-4480-bf04-b744e936d364",
                             TwoFactorEnabled = false,
                             UserName = "email2@gmail.com"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "d316dcb4-a2c7-4145-9223-45be56c9d9d4",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            FirstName = "AFN",
+                            LastName = "ALN",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAmUlOEt/JW6EQZqbK2Ih8ki34N0aEPrCcsYxyXe+AZVgl+OPb6zCel1/eHZLPms2Q==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "42c20619-7b66-4286-9414-4ce1ad7647e1",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
                         });
                 });
 

@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace TestPlatform.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitUpdated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -244,12 +245,18 @@ namespace TestPlatform.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { 1, "3e9ee344-862b-40a4-a1bd-f5e0dd1b78f3", "Administrator", "ADMINISTRATOR" });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "a303d8e8-704c-44da-9e22-bd73c9b9a429", "email1@gmail.com", false, "FN1", "LN1", false, null, "EMAIL1@GMAIL.COM", "EMAIL1@GMAIL.COM", "AQAAAAEAACcQAAAAEIESGheWgdIBCiSpGCwPHZ9bIgmwVQKVzkqcqOIsxF9MCqB1YwZyuvZeU99Vi2FPhA==", null, false, "007cb313-5eb8-496c-a109-8bab0d27b9bf", false, "email1@gmail.com" },
-                    { 2, 0, "783e436f-3d34-4fd1-9cdb-2021c285b716", "email2@gmail.com", false, "FN2", "LN2", false, null, "EMAIL2@GMAIL.COM", "EMAIL2@GMAIL.COM", "AQAAAAEAACcQAAAAEC+mxwyULfhm5NbEt4qmQvZYN5uXN+0eizxXJKl+c9TLQSoIoqtt5yHwUtDfjPUsow==", null, false, "ebc0548d-c93a-4d9b-81c1-a2af32848e05", false, "email2@gmail.com" }
+                    { 1, 0, "4c622711-0423-40c3-8e8d-3cd8fe0590ef", "email1@gmail.com", false, "FN1", "LN1", false, null, "EMAIL1@GMAIL.COM", "EMAIL1@GMAIL.COM", "AQAAAAEAACcQAAAAEPpR/yIL8ZA8WgW8p7W7uxSnYOAbmKIohl7PbYYeAaIVmSsmMMN9wn859TbyDrRHxg==", null, false, "227df544-2733-4d22-b0b5-c4dea1b57494", false, "email1@gmail.com" },
+                    { 2, 0, "6b241220-b3d0-4da5-a173-2b45d70a208a", "email2@gmail.com", false, "FN2", "LN2", false, null, "EMAIL2@GMAIL.COM", "EMAIL2@GMAIL.COM", "AQAAAAEAACcQAAAAEACW5PZJSDzeC5BlkIJ63YgwgCnj8TZPZhXTynj1fg/7WvHTuUgeAmYfuJDNW+07hw==", null, false, "b8c144df-3487-4480-bf04-b744e936d364", false, "email2@gmail.com" },
+                    { 3, 0, "d316dcb4-a2c7-4145-9223-45be56c9d9d4", "admin@gmail.com", false, "AFN", "ALN", false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAEAACcQAAAAEAmUlOEt/JW6EQZqbK2Ih8ki34N0aEPrCcsYxyXe+AZVgl+OPb6zCel1/eHZLPms2Q==", null, false, "42c20619-7b66-4286-9414-4ce1ad7647e1", false, "admin@gmail.com" }
                 });
 
             migrationBuilder.InsertData(

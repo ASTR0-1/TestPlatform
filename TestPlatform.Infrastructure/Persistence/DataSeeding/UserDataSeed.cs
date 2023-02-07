@@ -35,5 +35,17 @@ public class UserDataSeed : IEntityTypeConfiguration<User>
             LastName = "LN2",
             SecurityStamp = Guid.NewGuid().ToString()
         });
+        builder.HasData(new User()
+        {
+            Id = 3,
+            Email = "admin@gmail.com",
+            NormalizedEmail = "ADMIN@GMAIL.COM",
+            UserName = "admin@gmail.com",
+            NormalizedUserName = "ADMIN@GMAIL.COM",
+            PasswordHash = hasher.HashPassword(null, "admin_passW0rd"),
+            FirstName = "AFN",
+            LastName = "ALN",
+            SecurityStamp = Guid.NewGuid().ToString(),
+        });
     }
 }
