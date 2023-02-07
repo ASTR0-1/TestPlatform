@@ -5,7 +5,7 @@ using TestPlatform.Application.Interfaces.Service;
 
 namespace TestPlatform.WebAPI.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Administrator")]
 [Route("api/answerOptions")]
 [ApiController]
 public class AnswerOptionController : ControllerBase

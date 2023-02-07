@@ -17,6 +17,7 @@ public class TestController : ControllerBase
         _testService = testService;
     }
 
+    [Authorize(Roles = "Administrator")]
     [HttpGet]
     public async Task<IActionResult> GetByUserEmail([FromQuery] string userEmail)
     {
@@ -26,9 +27,9 @@ public class TestController : ControllerBase
     }
 
     [HttpGet("result")]
-    public async Task<IActionResult> GetResult([FromQuery] int testId, [FromQuery] string userEmail, [FromQuery] int[] answers)
+    public async Task<IActionResult> GetResult([FromQuery] int testId, [FromQuery] int[] answers)
     {
-        int result = await _testService.GetResultAsync(testId, userEmail, answers);
+        int result = await _testService.GetResultAsync(testId, User.Identity.Name, answers);
 
         return Ok(result);
     }

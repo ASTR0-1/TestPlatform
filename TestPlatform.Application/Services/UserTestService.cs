@@ -25,9 +25,6 @@ public class UserTestService : IUserTestService
         var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
         IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.TestId == testId);
 
-        if (!userTests.Any())
-            throw new KeyNotFoundException();
-
         IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 
         return userTestsDTO;
@@ -41,8 +38,6 @@ public class UserTestService : IUserTestService
 
         var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
         IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.UserId == user.Id);
-        if (!userTests.Any())
-            throw new KeyNotFoundException();
 
         IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 
@@ -53,9 +48,6 @@ public class UserTestService : IUserTestService
     {
         var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
         IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.UserId == userId);
-
-        if (!userTests.Any())
-            throw new KeyNotFoundException();
 
         IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 

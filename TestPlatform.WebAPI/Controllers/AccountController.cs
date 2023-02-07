@@ -31,7 +31,7 @@ public class AccountController : ControllerBase
 
         string token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
 
-        return Ok(new { user, token });
+        return Ok(new { user, roles, token });
     }
 
     [HttpPost("signUp")]
