@@ -6,11 +6,13 @@ import configurl from 'src/assets/config.json';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { UserForLogin } from 'src/app/entities/userForLogin';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
+    providers: [AuthService],
 })
 export class LoginComponent {
     invalidLogin?: boolean;
@@ -19,35 +21,30 @@ export class LoginComponent {
 
     constructor(
         private router: Router,
-        private http: HttpClient,
-        private jwtHelper: JwtHelperService
+        private jwtHelper: JwtHelperService,
+        private authService: AuthService
     ) {}
 
     public login = (form: NgForm) => {
-        this.http
-            .post(this.url + 'signIn', this.userForLogin, {
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
-                }),
-                withCredentials: true,
-            })
-            .subscribe({
-                next: (response) => {
-                    const token = (<any>response).token;
-                    const userEmail = (<any>response).user.email;
-                    const userName = (<any>response).user.firstName;
+        this.authService.signIn(this.userForLogin).subscribe({
+            next: (response) => {
+                const token = (<any>response).token;
+                const userEmail = (<any>response).user.email;
+                const userName = (<any>response).user.firstName;
+                const userRoles = (<any>response).user.roles;
 
-                    localStorage.setItem('jwt', token);
-                    localStorage.setItem('userEmail', userEmail);
-                    localStorage.setItem('userName', userName);
+                localStorage.setItem('jwt', token);
+                localStorage.setItem('userEmail', userEmail);
+                localStorage.setItem('userName', userName);
+                localStorage.setItem('userRoles', userRoles);
 
-                    this.invalidLogin = false;
-                    this.router.navigate(['']);
-                },
-                error: (err) => {
-                    this.invalidLogin = true;
-                },
-            });
+                this.invalidLogin = false;
+                this.router.navigate(['']);
+            },
+            error: (err) => {
+                this.invalidLogin = true;
+            },
+        });
     };
 
     isUserAuthenticated() {

@@ -2,5 +2,6 @@
     background: gray;
     color: white;
     min-width: 30vw;
-    min-height: 5vh;
+    min-height: 7vh;
+    align-items: center;
 }

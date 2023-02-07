@@ -4,17 +4,9 @@ import configurl from 'src/assets/config.json';
 
 @Injectable()
 export class TestService {
-    url = configurl.apiServer.url + '/api/';
-    userEmail = localStorage.getItem('userEmail');
+    url = configurl.apiServer.url + '/api/tests';
 
     constructor(private http: HttpClient) {}
-
-    getUserTests() {
-        return this.http.get(
-            this.url + 'tests' + `?userEmail=${this.userEmail}`,
-            { observe: 'response', withCredentials: true }
-        );
-    }
 
     getTestResult(testId: number, answers: number[]) {
         let answerString: string = '';
@@ -24,10 +16,7 @@ export class TestService {
         });
 
         return this.http.get(
-            this.url +
-                'tests/result' +
-                `?testId=${testId}&userEmail=${this.userEmail}` +
-                answerString,
+            this.url + '/result' + `?testId=${testId}` + answerString,
             { observe: 'response', withCredentials: true }
         );
     }

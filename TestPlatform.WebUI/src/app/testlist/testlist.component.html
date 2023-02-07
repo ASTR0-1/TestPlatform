@@ -1,5 +1,14 @@
-<div *ngFor="let test of tests"
-    class="test-list-container container d-flex flex-row justify-content-center align-text-center mt-4 p-3 rounded gap-5">
-    <p class="m-0">{{test.title}}</p>
-    <button class="btn btn-info" (click)="confirm(test)">Start</button>
+<div class="d-flex flex-column">
+    <p *ngIf="userTests.length > 0" class="m-0 mt-3 font-weight-bold">Tests: </p>
+    <div *ngFor="let userTest of userTests"
+        class="test-list-container container d-flex flex-row justify-content-center align-text-center mt-1 p-1 rounded gap-5">
+        <p class="m-0">{{userTest.test?.title}}</p>
+        <button class="btn btn-info" (click)="confirm(userTest.test)">Start</button>
+    </div>
+    <p *ngIf="completedUserTests.length > 0" class="m-0 mt-3 font-weight-bold">Completed tests: </p>
+    <div *ngFor="let userTest of completedUserTests"
+        class="test-list-container container d-flex flex-row justify-content-center align-text-center mt-1 p-1 rounded gap-5">
+        <p class="m-0">{{userTest.test?.title}}</p>
+        <p class="m-0">Rating: {{userTest.rating}}</p>
+    </div>
 </div>

@@ -1,33 +1,49 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Test } from '../entities/test';
 
-import { TestService } from '../services/test.service';
+import { Test } from '../entities/test';
+import { UserTest } from '../entities/userTest';
+
+import { UserTestService } from '../services/userTest.service';
 
 @Component({
     selector: 'test-list',
     templateUrl: './testlist.component.html',
     styleUrls: ['./testlist.component.css'],
-    providers: [TestService],
+    providers: [UserTestService],
 })
 export class TestListComponent implements OnInit {
-    tests: Test[] = [];
+    private unfilteredUserTests: UserTest[] = [];
 
-    constructor(private testService: TestService, private router: Router) {}
+    userTests: UserTest[] = [];
+    completedUserTests: UserTest[] = [];
 
-    ngOnInit(): void {
-        this.loadTests();
+    constructor(
+        private userTestService: UserTestService,
+        private router: Router
+    ) {}
+
+    async ngOnInit(): Promise<void> {
+        await this.loadUserTests();
+
+        this.userTests = this.unfilteredUserTests.filter(
+            (t) => t.isCompleted == false
+        );
+
+        this.completedUserTests = this.unfilteredUserTests.filter(
+            (t) => t.isCompleted == true
+        );
     }
 
-    confirm(test: Test) {
+    confirm(test?: Test) {
         this.router.navigateByUrl('confirmation', {
             state: { test: test },
         });
     }
 
-    private loadTests(): void {
-        this.testService.getUserTests().subscribe((resp) => {
-            this.tests = <Test[]>resp.body;
+    private async loadUserTests() {
+        await this.userTestService.getUserTests().then((resp) => {
+            this.unfilteredUserTests = <UserTest[]>resp?.body;
         });
     }
 }
