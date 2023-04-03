@@ -31,7 +31,7 @@ export class LoginComponent {
                 const token = (<any>response).token;
                 const userEmail = (<any>response).user.email;
                 const userName = (<any>response).user.firstName;
-                const userRoles = (<any>response).user.roles;
+                const userRoles = (<any>response).roles;
 
                 localStorage.setItem('jwt', token);
                 localStorage.setItem('userEmail', userEmail);
@@ -45,6 +45,8 @@ export class LoginComponent {
                 this.invalidLogin = true;
             },
         });
+
+        console.log(localStorage);
     };
 
     isUserAuthenticated() {

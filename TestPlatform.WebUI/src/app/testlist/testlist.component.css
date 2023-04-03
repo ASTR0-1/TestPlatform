@@ -1,7 +1,7 @@
 .test-list-container {
     background: gray;
     color: white;
-    min-width: 30vw;
+    min-width: 40vw;
     min-height: 7vh;
     align-items: center;
 }

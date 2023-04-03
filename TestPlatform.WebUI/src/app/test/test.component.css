@@ -1,6 +1,7 @@
 .test-container {
     background: gray;
     color: white;
-    min-width: 30vw;
+    font-size: 20px;
+    min-width: 40vw;
     min-height: 5vh;
 }
