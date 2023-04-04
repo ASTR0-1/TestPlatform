@@ -10,18 +10,18 @@ namespace TestPlatform.WebAPI.Controllers;
 [ApiController]
 public class AnswerOptionController : ControllerBase
 {
-    private readonly IAnswerOptionService _answerOptionService;
+	private readonly IAnswerOptionService _answerOptionService;
 
-    public AnswerOptionController(IAnswerOptionService answerOptionService)
-    {
-        _answerOptionService = answerOptionService;
-    }
+	public AnswerOptionController(IAnswerOptionService answerOptionService)
+	{
+		_answerOptionService = answerOptionService;
+	}
 
-    [HttpGet]
-    public async Task<IActionResult> GetByQuestionId([FromQuery] int questionId)
-    {
-        IEnumerable<AnswerOptionDTO> answerOptions = await _answerOptionService.GetByQuestionId(questionId);
+	[HttpGet]
+	public async Task<IActionResult> GetByQuestionId([FromQuery] int questionId)
+	{
+		IEnumerable<AnswerOptionDTO> answerOptions = await _answerOptionService.GetByQuestionId(questionId);
 
-        return Ok(answerOptions);
-    }
+		return Ok(answerOptions);
+	}
 }

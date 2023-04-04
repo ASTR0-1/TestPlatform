@@ -6,12 +6,12 @@ namespace TestPlatform.Infrastructure.Persistence.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
-    {
-        builder.Property(u => u.FirstName)
-            .IsRequired();
+	public void Configure(EntityTypeBuilder<User> builder)
+	{
+		builder.Property(u => u.FirstName)
+			.IsRequired();
 
-        builder.Property(u => u.LastName)
-            .IsRequired();
-    }
+		builder.Property(u => u.LastName)
+			.IsRequired();
+	}
 }

@@ -4,7 +4,7 @@ namespace TestPlatform.Application.Interfaces.Service;
 
 public interface IUserTestService
 {
-    Task<IEnumerable<UserTestDTO>> GetByUserEmailAsync(string email);
+	Task<IEnumerable<UserTestDTO>> GetByUserEmailAsync(string email);
 
-    Task<IEnumerable<UserTestDTO>> GetByTestIdAsync(int testId);
+	Task<IEnumerable<UserTestDTO>> GetByTestIdAsync(int testId);
 }

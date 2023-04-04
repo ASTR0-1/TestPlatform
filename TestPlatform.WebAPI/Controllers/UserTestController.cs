@@ -10,40 +10,40 @@ namespace TestPlatform.WebAPI.Controllers;
 [ApiController]
 public class UserTestController : ControllerBase
 {
-    private readonly IUserTestService _userTestService;
+	private readonly IUserTestService _userTestService;
 
-    public UserTestController(IUserTestService userTestService)
-    {
-        _userTestService = userTestService;
-    }
+	public UserTestController(IUserTestService userTestService)
+	{
+		_userTestService = userTestService;
+	}
 
-    [Authorize(Roles = "Administrator")]
-    [HttpGet("test/{testId}")]
-    public async Task<IActionResult> GetAllByTestId(int testId)
-    {
-        IEnumerable<UserTestDTO> userTests;
+	[Authorize(Roles = "Administrator")]
+	[HttpGet("test/{testId}")]
+	public async Task<IActionResult> GetAllByTestId(int testId)
+	{
+		IEnumerable<UserTestDTO> userTests;
 
-        userTests = await _userTestService.GetByTestIdAsync(testId);
+		userTests = await _userTestService.GetByTestIdAsync(testId);
 
-        return Ok(userTests);
-    }
+		return Ok(userTests);
+	}
 
-    [Authorize(Roles = "Administrator")]
-    [HttpGet("user")]
-    public async Task<IActionResult> GetAllByUserEmail([FromQuery] string userEmail)
-    {
-        IEnumerable<UserTestDTO> userTests;
+	[Authorize(Roles = "Administrator")]
+	[HttpGet("user")]
+	public async Task<IActionResult> GetAllByUserEmail([FromQuery] string userEmail)
+	{
+		IEnumerable<UserTestDTO> userTests;
 
-        userTests = await _userTestService.GetByUserEmailAsync(userEmail);
+		userTests = await _userTestService.GetByUserEmailAsync(userEmail);
 
-        return Ok(userTests);
-    }
+		return Ok(userTests);
+	}
 
-    [HttpGet("currentUser")]
-    public async Task<IActionResult> GetAllUserTests()
-    {
-        IEnumerable<UserTestDTO> userTests = await _userTestService.GetByUserEmailAsync(User.Identity.Name);
+	[HttpGet("currentUser")]
+	public async Task<IActionResult> GetAllUserTests()
+	{
+		IEnumerable<UserTestDTO> userTests = await _userTestService.GetByUserEmailAsync(User.Identity.Name);
 
-        return Ok(userTests);
-    }
+		return Ok(userTests);
+	}
 }

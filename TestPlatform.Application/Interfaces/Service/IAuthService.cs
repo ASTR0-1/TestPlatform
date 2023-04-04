@@ -5,9 +5,9 @@ namespace TestPlatform.Application.Interfaces.Service;
 
 public interface IAuthService
 {
-    Task<User> SignUp(SignUpDTO entity);
+	Task<User> SignUp(SignUpDTO entity);
 
-    Task<User> SignIn(SignInDTO entity);
+	Task<User> SignIn(SignInDTO entity);
 
-    Task SignOut();
+	Task SignOut();
 }

@@ -6,15 +6,15 @@ namespace TestPlatform.Infrastructure.Persistence.Configurations;
 
 public class TestConfiguration : IEntityTypeConfiguration<Test>
 {
-    public void Configure(EntityTypeBuilder<Test> builder)
-    {
-        builder.Property(t => t.Title)
-            .IsRequired();
+	public void Configure(EntityTypeBuilder<Test> builder)
+	{
+		builder.Property(t => t.Title)
+			.IsRequired();
 
-        builder.Property(t => t.Description)
-            .IsRequired();
+		builder.Property(t => t.Description)
+			.IsRequired();
 
-        builder.Property(t => t.QuestionCount)
-            .IsRequired();
-    }
+		builder.Property(t => t.QuestionCount)
+			.IsRequired();
+	}
 }

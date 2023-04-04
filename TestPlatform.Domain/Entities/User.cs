@@ -4,9 +4,9 @@ namespace TestPlatform.Domain.Entities;
 
 public class User : IdentityUser<int>
 {
-    public string FirstName { get; set; }
+	public string FirstName { get; set; }
 
-    public string LastName { get; set; }
+	public string LastName { get; set; }
 
-    public IEnumerable<UserTest> UserTests { get; set; } = new List<UserTest>();
+	public IEnumerable<UserTest> UserTests { get; set; } = new List<UserTest>();
 }

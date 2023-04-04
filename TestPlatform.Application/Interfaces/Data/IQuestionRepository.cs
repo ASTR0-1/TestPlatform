@@ -4,13 +4,13 @@ namespace TestPlatform.Application.Interfaces.Data;
 
 public interface IQuestionRepository
 {
-    Task<IEnumerable<Question>> GetQuestionsAsync(bool trackChanges);
+	Task<IEnumerable<Question>> GetQuestionsAsync(bool trackChanges);
 
-    Task<Question> GetQuestionAsync(int id, bool trackChanges);
+	Task<Question> GetQuestionAsync(int id, bool trackChanges);
 
-    void CreateQuestion(Question question);
+	void CreateQuestion(Question question);
 
-    void UpdateQuestion(Question question);
+	void UpdateQuestion(Question question);
 
-    void DeleteQuestion(Question question);
+	void DeleteQuestion(Question question);
 }

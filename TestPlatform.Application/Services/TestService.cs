@@ -9,26 +9,26 @@ namespace TestPlatform.Application.Services;
 
 public class TestService : ITestService
 {
-    private readonly IRepositoryManager _repository;
-    private readonly IMapper _mapper;
-    private readonly UserManager<User> _userManager;
+	private readonly IRepositoryManager _repository;
+	private readonly IMapper _mapper;
+	private readonly UserManager<User> _userManager;
 
-    public TestService(IRepositoryManager repository, IMapper mapper, UserManager<User> userManager)
-    {
-        _repository = repository;
-        _mapper = mapper;
-        _userManager = userManager;
-    }
+	public TestService(IRepositoryManager repository, IMapper mapper, UserManager<User> userManager)
+	{
+		_repository = repository;
+		_mapper = mapper;
+		_userManager = userManager;
+	}
 
-    public async Task<TestDTO> GetByTestId(int testId)
-    {
-        var test = await _repository.Test.GetTestAsync(testId, trackChanges: false)
-            ?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
+	public async Task<TestDTO> GetByTestId(int testId)
+	{
+		var test = await _repository.Test.GetTestAsync(testId, trackChanges: false)
+			?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
 
-        var testDto = _mapper.Map<Test, TestDTO>(test);
+		var testDto = _mapper.Map<Test, TestDTO>(test);
 
-        return testDto;
-    }
+		return testDto;
+	}
 
 	public async Task<int> GetResultAsync(int testId, string email, int[] answers)
 	{
@@ -57,26 +57,26 @@ public class TestService : ITestService
 	}
 
 	private int CalculateTestResult(Test test, int[] answers)
-    {
-        int result = 0;
-        int questionCount = test.QuestionCount;
+	{
+		int result = 0;
+		int questionCount = test.QuestionCount;
 
-        var questions = test.Questions.ToList();
+		var questions = test.Questions.ToList();
 
-        for (int questionNumber = 0; questionNumber < questionCount; questionNumber++)
-        {
-            var answerOptions = questions[questionNumber].AnswerOptions;
+		for (int questionNumber = 0; questionNumber < questionCount; questionNumber++)
+		{
+			var answerOptions = questions[questionNumber].AnswerOptions;
 
-            int correctAnswerNumber = questions[questionNumber].AnswerOptions
-                .Where(ao => ao.IsCorrect == true)
-                .FirstOrDefault()
-                .OptionNumber;
-            int currentAnswerNumber = answers[questionNumber];
+			int correctAnswerNumber = questions[questionNumber].AnswerOptions
+				.Where(ao => ao.IsCorrect == true)
+				.FirstOrDefault()
+				.OptionNumber;
+			int currentAnswerNumber = answers[questionNumber];
 
-            if (currentAnswerNumber == correctAnswerNumber)
-                result++;
-        }
+			if (currentAnswerNumber == correctAnswerNumber)
+				result++;
+		}
 
-        return result;
-    }
+		return result;
+	}
 }

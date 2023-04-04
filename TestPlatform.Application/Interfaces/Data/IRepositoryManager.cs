@@ -2,10 +2,10 @@
 
 public interface IRepositoryManager
 {
-    IAnswerOptionRepository AnswerOption { get; }
-    IQuestionRepository Question { get; }
-    ITestRepository Test { get; }
-    IUserTestRepository UserTest { get; }
+	IAnswerOptionRepository AnswerOption { get; }
+	IQuestionRepository Question { get; }
+	ITestRepository Test { get; }
+	IUserTestRepository UserTest { get; }
 
-    Task SaveAsync();
+	Task SaveAsync();
 }

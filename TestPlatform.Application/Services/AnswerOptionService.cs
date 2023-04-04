@@ -8,25 +8,25 @@ namespace TestPlatform.Application.Services;
 
 public class AnswerOptionService : IAnswerOptionService
 {
-    private readonly IRepositoryManager _repository;
-    private readonly IMapper _mapper;
+	private readonly IRepositoryManager _repository;
+	private readonly IMapper _mapper;
 
-    public AnswerOptionService(IRepositoryManager repository, IMapper mapper)
-    {
-        _repository = repository;
-        _mapper = mapper;
-    }
+	public AnswerOptionService(IRepositoryManager repository, IMapper mapper)
+	{
+		_repository = repository;
+		_mapper = mapper;
+	}
 
-    public async Task<IEnumerable<AnswerOptionDTO>> GetByQuestionId(int questionId)
-    {
-        Question question = await _repository.Question.GetQuestionAsync(questionId, trackChanges: false)
-            ?? throw new KeyNotFoundException($"Question with id '{questionId}' doesn't exist");
+	public async Task<IEnumerable<AnswerOptionDTO>> GetByQuestionId(int questionId)
+	{
+		Question question = await _repository.Question.GetQuestionAsync(questionId, trackChanges: false)
+			?? throw new KeyNotFoundException($"Question with id '{questionId}' doesn't exist");
 
 		var answerOptions = await _repository.AnswerOption.GetAnswerOptionsAsync(trackChanges: false);
-        var sortedAnswerOptions = answerOptions.Where(ao => ao.QuestionId == questionId);
+		var sortedAnswerOptions = answerOptions.Where(ao => ao.QuestionId == questionId);
 
-        var sortedAnswerOptionsDTO = _mapper.Map<IEnumerable<AnswerOption>, IEnumerable<AnswerOptionDTO>>(sortedAnswerOptions);
+		var sortedAnswerOptionsDTO = _mapper.Map<IEnumerable<AnswerOption>, IEnumerable<AnswerOptionDTO>>(sortedAnswerOptions);
 
-        return sortedAnswerOptionsDTO;
-    }
+		return sortedAnswerOptionsDTO;
+	}
 }

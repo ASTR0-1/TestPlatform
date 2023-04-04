@@ -19,7 +19,7 @@ public class QuestionService : IQuestionService
 
 	public async Task<IEnumerable<QuestionDTO>> GetByTestId(int testId)
 	{
-		Test test = await _repository.Test.GetTestAsync(testId, trackChanges: false) 
+		Test test = await _repository.Test.GetTestAsync(testId, trackChanges: false)
 			?? throw new KeyNotFoundException($"There is no test with testId: {testId}");
 
 		var questions = await _repository.Question.GetQuestionsAsync(trackChanges: false);
