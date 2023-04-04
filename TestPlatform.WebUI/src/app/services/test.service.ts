@@ -9,15 +9,17 @@ export class TestService {
     constructor(private http: HttpClient) {}
 
     getTestResult(testId: number, answers: number[]) {
-        let answerString: string = '';
+        const answerString = answers
+            .map((answer, index) => {
+                const prefix = index === 0 ? '?' : '&';
+                return `${prefix}answers=${answer}`;
+            })
+            .join('');
+        const endpoint = `${this.url}/${testId}/result${answerString}`;
 
-        answers.forEach(function (value) {
-            answerString += `&answers=${value}`;
+        return this.http.get(endpoint, {
+            observe: 'response',
+            withCredentials: true,
         });
-
-        return this.http.get(
-            this.url + '/result' + `?testId=${testId}` + answerString,
-            { observe: 'response', withCredentials: true }
-        );
     }
 }

@@ -45,6 +45,8 @@ public class JwtHelper
 
         var roleClaims = roles.Select(r => new Claim(ClaimTypes.Role, r));
 
+        claims.AddRange(roleClaims);
+
         var claimsIdentity =
             new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                 ClaimsIdentity.DefaultRoleClaimType);

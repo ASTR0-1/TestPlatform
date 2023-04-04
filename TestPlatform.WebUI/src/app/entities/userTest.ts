@@ -1,9 +1,9 @@
 import { Test } from './test';
 
-export class UserTest {
-    test: Test | undefined;
-    rating: number | undefined;
-    answers: number[] | undefined;
-    isCompleted: boolean | undefined;
-    finishTime: Date | undefined;
+export interface UserTest {
+    test: Test;
+    rating: number;
+    answers: number[];
+    isCompleted: boolean;
+    finishTime: Date;
 }

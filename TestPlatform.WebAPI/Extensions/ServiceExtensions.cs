@@ -2,6 +2,7 @@
 using System.Net;
 using TestPlatform.Application.Interfaces.Service;
 using TestPlatform.Application.Services;
+using TestPlatform.Domain.Exceptions;
 
 namespace TestPlatform.WebAPI.Extensions;
 
@@ -31,15 +32,24 @@ public static class ServiceExtensions
         {
             appError.Run(async context =>
             {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.ContentType = "application/json";
+                
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+
                 if (contextFeature != null)
                 {
+                    context.Response.StatusCode = contextFeature.Error switch
+                    {
+                        UserAuthenticationException => StatusCodes.Status401Unauthorized,
+                        KeyNotFoundException => StatusCodes.Status404NotFound,
+                        InvalidOperationException => StatusCodes.Status400BadRequest,
+                        _ => StatusCodes.Status500InternalServerError
+                    } ;
+
                     await context.Response.WriteAsync(new
                     {
-                        StatusCode = context.Response.StatusCode,
-                        Message = "Internal Server Error."
+						context.Response.StatusCode,
+						contextFeature.Error.Message
                     }.ToString());
                 }
             });

@@ -20,56 +20,43 @@ public class TestService : ITestService
         _userManager = userManager;
     }
 
-    public async Task<IEnumerable<TestDTO>> GetByEmailAsync(string email)
+    public async Task<TestDTO> GetByTestId(int testId)
     {
-        User user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
-            throw new KeyNotFoundException();
+        var test = await _repository.Test.GetTestAsync(testId, trackChanges: false)
+            ?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
 
-        var tests = await _repository.Test.GetTestsAsync(trackChanges: false);
-        var allUserTests = await _repository.UserTest.GetUserTestsAsync(false);
+        var testDto = _mapper.Map<Test, TestDTO>(test);
 
-        var sortedTests = allUserTests
-            .Where(ut => ut.User.Email == email && ut.IsCompleted == false)
-            .Select(ut => ut.Test);
-        if (sortedTests == null)
-            throw new KeyNotFoundException();
-
-        var sortedTestsDTO = _mapper.Map<IEnumerable<Test>, IEnumerable<TestDTO>>(sortedTests);
-
-        return sortedTestsDTO;
+        return testDto;
     }
 
-    public async Task<int> GetResultAsync(int testId, string email, int[] answers)
-    {
-        User user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
-            throw new KeyNotFoundException();
+	public async Task<int> GetResultAsync(int testId, string email, int[] answers)
+	{
+		User user = await _userManager.FindByEmailAsync(email)
+			?? throw new KeyNotFoundException($"User with email \"{email}\" doesn't exist");
 
-        Test test = await _repository.Test.GetTestAsync(testId, trackChanges: false);
-        if (test == null)
-            throw new KeyNotFoundException();
+		Test test = await _repository.Test.GetTestAsync(testId, trackChanges: false)
+			?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
 
-        IEnumerable<UserTest> userTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: true);
-        UserTest userTest = userTests.Where(ut => ut.User.Id == user.Id && ut.TestId == testId).FirstOrDefault();
-        if (userTest == null)
-            throw new KeyNotFoundException();
+		IEnumerable<UserTest> userTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: true);
+		UserTest userTest = userTests.Where(ut => ut.User.Id == user.Id && ut.TestId == testId).FirstOrDefault()
+			?? throw new KeyNotFoundException($"UserTest with given UserId: '{user.Id}' and TestId: '{testId}' doesn't exist");
 
-        if (userTest.IsCompleted)
-            throw new InvalidOperationException();
+		if (userTest.IsCompleted)
+			throw new InvalidOperationException("Can't get a result for completed test");
 
-        int result = CalculateTestResult(test, answers);
-        userTest.Answers = String.Join("", answers);
-        userTest.Rating = result;
-        userTest.FinishTime = DateTime.Now;
-        userTest.IsCompleted = true;
+		int result = CalculateTestResult(test, answers);
+		userTest.Answers = string.Join("", answers);
+		userTest.Rating = result;
+		userTest.FinishTime = DateTime.Now;
+		userTest.IsCompleted = true;
 
-        await _repository.SaveAsync();
+		await _repository.SaveAsync();
 
-        return result;
-    }
+		return result;
+	}
 
-    private int CalculateTestResult(Test test, int[] answers)
+	private int CalculateTestResult(Test test, int[] answers)
     {
         int result = 0;
         int questionCount = test.QuestionCount;

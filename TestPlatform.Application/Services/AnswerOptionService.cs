@@ -19,11 +19,10 @@ public class AnswerOptionService : IAnswerOptionService
 
     public async Task<IEnumerable<AnswerOptionDTO>> GetByQuestionId(int questionId)
     {
-        Question question = await _repository.Question.GetQuestionAsync(questionId, trackChanges: false);
-        if (question == null)
-            throw new KeyNotFoundException();
+        Question question = await _repository.Question.GetQuestionAsync(questionId, trackChanges: false)
+            ?? throw new KeyNotFoundException($"Question with id '{questionId}' doesn't exist");
 
-        var answerOptions = await _repository.AnswerOption.GetAnswerOptionsAsync(trackChanges: false);
+		var answerOptions = await _repository.AnswerOption.GetAnswerOptionsAsync(trackChanges: false);
         var sortedAnswerOptions = answerOptions.Where(ao => ao.QuestionId == questionId);
 
         var sortedAnswerOptionsDTO = _mapper.Map<IEnumerable<AnswerOption>, IEnumerable<AnswerOptionDTO>>(sortedAnswerOptions);

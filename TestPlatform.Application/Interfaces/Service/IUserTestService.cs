@@ -6,7 +6,5 @@ public interface IUserTestService
 {
     Task<IEnumerable<UserTestDTO>> GetByUserEmailAsync(string email);
 
-    Task<IEnumerable<UserTestDTO>> GetByUserIdAsync(int userId);
-
     Task<IEnumerable<UserTestDTO>> GetByTestIdAsync(int testId);
 }

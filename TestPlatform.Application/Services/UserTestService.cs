@@ -22,6 +22,9 @@ public class UserTestService : IUserTestService
 
     public async Task<IEnumerable<UserTestDTO>> GetByTestIdAsync(int testId)
     {
+        Test test = await _repository.Test.GetTestAsync(testId, false)
+            ?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
+
         var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
         IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.TestId == testId);
 
@@ -32,22 +35,11 @@ public class UserTestService : IUserTestService
 
     public async Task<IEnumerable<UserTestDTO>> GetByUserEmailAsync(string email)
     {
-        User user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
-            throw new KeyNotFoundException();
+        User user = await _userManager.FindByEmailAsync(email) 
+            ?? throw new KeyNotFoundException($"User with email \"{email}\" doesn't exist");
 
-        var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
+		var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
         IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.UserId == user.Id);
-
-        IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
-
-        return userTestsDTO;
-    }
-
-    public async Task<IEnumerable<UserTestDTO>> GetByUserIdAsync(int userId)
-    {
-        var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
-        IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.UserId == userId);
 
         IEnumerable<UserTestDTO> userTestsDTO = _mapper.Map<IEnumerable<UserTest>, IEnumerable<UserTestDTO>>(userTests);
 

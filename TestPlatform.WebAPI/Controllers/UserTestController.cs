@@ -18,8 +18,8 @@ public class UserTestController : ControllerBase
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpGet("test")]
-    public async Task<IActionResult> GetAllByTestId([FromQuery] int testId)
+    [HttpGet("test/{testId}")]
+    public async Task<IActionResult> GetAllByTestId(int testId)
     {
         IEnumerable<UserTestDTO> userTests;
 
@@ -29,17 +29,17 @@ public class UserTestController : ControllerBase
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetAllByUserId(int userId)
+    [HttpGet("user")]
+    public async Task<IActionResult> GetAllByUserEmail([FromQuery] string userEmail)
     {
         IEnumerable<UserTestDTO> userTests;
 
-        userTests = await _userTestService.GetByUserIdAsync(userId);
+        userTests = await _userTestService.GetByUserEmailAsync(userEmail);
 
         return Ok(userTests);
     }
 
-    [HttpGet("user")]
+    [HttpGet("currentUser")]
     public async Task<IActionResult> GetAllUserTests()
     {
         IEnumerable<UserTestDTO> userTests = await _userTestService.GetByUserEmailAsync(User.Identity.Name);

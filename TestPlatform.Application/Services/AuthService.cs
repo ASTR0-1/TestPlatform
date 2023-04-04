@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TestPlatform.Application.DTOs;
 using TestPlatform.Application.Interfaces.Service;
 using TestPlatform.Domain.Entities;
+using TestPlatform.Domain.Exceptions;
 
 namespace TestPlatform.Application.Services;
 
@@ -24,12 +25,12 @@ public class AuthService : IAuthService
                 .FirstOrDefaultAsync(u => u.Email == entity.Email);
 
         if (user == null)
-            throw new KeyNotFoundException();
+            throw new UserAuthenticationException($"Unknown user with email: {entity.Email}");
 
         var isPasswordCorrect = await _userManager.CheckPasswordAsync(user, entity.Password);
 
         if (!isPasswordCorrect)
-            throw new ArgumentException();
+            throw new UserAuthenticationException($"Invalid password for user with email: {entity.Email}");
 
         await _userManager.UpdateSecurityStampAsync(user);
         await _signInManager.SignInAsync(user, true);
@@ -55,14 +56,11 @@ public class AuthService : IAuthService
         var result = await _userManager.CreateAsync(user, entity.Password);
 
         if (!result.Succeeded)
-            throw new Exception(string.Join(';', result.Errors.Select(ie => ie.Description)));
+            throw new UserAuthenticationException(string.Join(';', result.Errors.Select(ie => ie.Description)));
 
         var currentUser = await _userManager.Users
             .Include(u => u.UserTests)
             .FirstOrDefaultAsync(u => u.Email == entity.Email); ;
-
-        if (currentUser == null)
-            throw new KeyNotFoundException();
 
         await _signInManager.SignInAsync(currentUser, true);
 

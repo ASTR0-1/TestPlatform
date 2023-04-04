@@ -1,6 +1,6 @@
-export class Test {
-    id: number | undefined;
-    title: string | undefined;
-    description: string | undefined;
-    questionCount: number | undefined;
+export interface Test {
+    id: number;
+    title: string;
+    description: string;
+    questionCount: number;
 }

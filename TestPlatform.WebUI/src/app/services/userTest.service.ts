@@ -10,7 +10,7 @@ export class UserTestService {
 
     getUserTests() {
         return this.http
-            .get(this.url + `/user`, {
+            .get(this.url + `/currentUser`, {
                 observe: 'response',
                 withCredentials: true,
             })

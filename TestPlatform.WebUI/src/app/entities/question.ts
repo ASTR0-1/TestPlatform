@@ -1,7 +1,7 @@
 import { AnswerOption } from './answerOption';
 
-export class Question {
-    questionNumber: number | undefined;
-    questionText: string | undefined;
-    answerOptions: AnswerOption[] | undefined;
+export interface Question {
+    questionNumber: number;
+    questionText: string;
+    answerOptions: AnswerOption[];
 }

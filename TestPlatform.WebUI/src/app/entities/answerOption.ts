@@ -1,4 +1,4 @@
-export class AnswerOption {
-    optionNumber: number | undefined;
-    optionText: string | undefined;
+export interface AnswerOption {
+    optionNumber: number;
+    optionText: string;
 }

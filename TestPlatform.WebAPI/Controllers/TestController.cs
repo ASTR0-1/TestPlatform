@@ -18,16 +18,16 @@ public class TestController : ControllerBase
     }
 
     [Authorize(Roles = "Administrator")]
-    [HttpGet]
-    public async Task<IActionResult> GetByUserEmail([FromQuery] string userEmail)
+    [HttpGet("{testId}")]
+    public async Task<IActionResult> GetByTestId(int testId)
     {
-        IEnumerable<TestDTO> tests = await _testService.GetByEmailAsync(userEmail);
+        TestDTO test = await _testService.GetByTestId(testId);
         
-        return Ok(tests);
+        return Ok(test);
     }
 
-    [HttpGet("result")]
-    public async Task<IActionResult> GetResult([FromQuery] int testId, [FromQuery] int[] answers)
+    [HttpGet("{testId}/result")]
+    public async Task<IActionResult> GetResult(int testId, [FromQuery] int[] answers)
     {
         int result = await _testService.GetResultAsync(testId, User.Identity.Name, answers);
 
