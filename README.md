@@ -56,12 +56,12 @@ It is simple test platform to pass given tests and get your results.
 <br>
 <b>Test Controller:</b><br>
 
-![image](https://user-images.githubusercontent.com/71894616/222117389-b5551449-6694-49f7-8ee2-c04c31cb10fe.png)
+![image](https://user-images.githubusercontent.com/71894616/229906075-250869ee-7c34-404b-a277-d97ed7e0450d.png)
 
 <br>
 <b>UserTest Controller:</b><br>
 
-![image](https://user-images.githubusercontent.com/71894616/222117417-8b8abfdd-6168-4137-9338-5a2761c503c7.png)
+![image](https://user-images.githubusercontent.com/71894616/229906043-cc7f0193-643d-42e8-ad0a-7fd380dc4c11.png)
 
 <br>
 
