@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TestPlatform.Application.DTOs;
 using TestPlatform.Application.Interfaces.Service;
 
 namespace TestPlatform.WebAPI.Controllers;
 
+[Authorize]
 [Route("api/questions")]
 [ApiController]
 public class QuestionController : ControllerBase

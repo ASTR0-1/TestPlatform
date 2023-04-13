@@ -21,7 +21,6 @@ public class Program
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
-		// Add services to the container.
 		IServiceCollection services = builder.Services;
 		IConfiguration configuration = builder.Configuration;
 
@@ -49,6 +48,11 @@ public class Program
 		services.ConfigureApplicationCookie(options =>
 		{
 			options.Cookie.SameSite = SameSiteMode.None;
+			options.Events.OnRedirectToLogin = context =>
+			{
+				context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+				return Task.CompletedTask;
+			};
 		});
 
 		services.Configure<DataProtectionTokenProviderOptions>(opt =>
