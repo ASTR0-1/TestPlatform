@@ -116,8 +116,6 @@ public class AnswerOptionDataSeed : IEntityTypeConfiguration<AnswerOption>
 			QuestionId = 4,
 		});
 
-		//
-
 		builder.HasData(new AnswerOption()
 		{
 			Id = 14,

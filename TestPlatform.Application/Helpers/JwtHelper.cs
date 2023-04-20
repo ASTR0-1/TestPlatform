@@ -6,7 +6,7 @@ using TestPlatform.Domain.Entities;
 
 namespace TestPlatform.Application.Helpers;
 
-public class JwtHelper
+public static class JwtHelper
 {
 	public static string GenerateJwt(User user, IEnumerable<string> roles, JwtSettings jwtSettings)
 	{
@@ -33,7 +33,7 @@ public class JwtHelper
 	private static ClaimsIdentity GetIdentity(User user, IEnumerable<string> roles)
 	{
 		if (user == null)
-			throw new NullReferenceException("Cannot generate jwt for null user");
+			throw new ArgumentException("Cannot generate jwt for null user");
 
 		var claims = new List<Claim>
 			{

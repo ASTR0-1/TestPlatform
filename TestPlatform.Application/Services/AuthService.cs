@@ -60,7 +60,7 @@ public class AuthService : IAuthService
 
 		var currentUser = await _userManager.Users
 			.Include(u => u.UserTests)
-			.FirstOrDefaultAsync(u => u.Email == entity.Email); ;
+			.FirstOrDefaultAsync(u => u.Email == entity.Email);
 
 		await _signInManager.SignInAsync(currentUser, true);
 

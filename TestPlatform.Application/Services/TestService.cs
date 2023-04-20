@@ -39,7 +39,7 @@ public class TestService : ITestService
 			?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
 
 		IEnumerable<UserTest> userTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: true);
-		UserTest userTest = userTests.Where(ut => ut.User.Id == user.Id && ut.TestId == testId).FirstOrDefault()
+		UserTest userTest = userTests.FirstOrDefault(ut => ut.User.Id == user.Id && ut.TestId == testId)
 			?? throw new KeyNotFoundException($"UserTest with given UserId: '{user.Id}' and TestId: '{testId}' doesn't exist");
 
 		if (userTest.IsCompleted)
@@ -56,7 +56,7 @@ public class TestService : ITestService
 		return result;
 	}
 
-	private int CalculateTestResult(Test test, int[] answers)
+	private static int CalculateTestResult(Test test, int[] answers)
 	{
 		int result = 0;
 		int questionCount = test.QuestionCount;
@@ -65,12 +65,14 @@ public class TestService : ITestService
 
 		for (int questionNumber = 0; questionNumber < questionCount; questionNumber++)
 		{
-			var answerOptions = questions[questionNumber].AnswerOptions;
+			var correctAnswerOption = questions[questionNumber].AnswerOptions
+				.First(ao => ao.IsCorrect);
 
-			int correctAnswerNumber = questions[questionNumber].AnswerOptions
-				.Where(ao => ao.IsCorrect == true)
-				.FirstOrDefault()
-				.OptionNumber;
+			if (correctAnswerOption == null)
+				throw new KeyNotFoundException($"There is no correct answer for the test({test.Id}) with question number: {questionNumber}");
+
+			int correctAnswerNumber = correctAnswerOption.OptionNumber;
+
 			int currentAnswerNumber = answers[questionNumber];
 
 			if (currentAnswerNumber == correctAnswerNumber)

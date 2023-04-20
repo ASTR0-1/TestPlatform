@@ -8,7 +8,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
 	protected RepositoryContext _repositoryContext;
 
-	public RepositoryBase(RepositoryContext repositoryContext)
+	protected RepositoryBase(RepositoryContext repositoryContext)
 	{
 		_repositoryContext = repositoryContext;
 	}
@@ -28,11 +28,11 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 				.AsNoTracking() :
 			_repositoryContext.Set<T>();
 
-	public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+	public IQueryable<T> FindByCondition(Expression<Func<T, bool>> condition, bool trackChanges) =>
 		!trackChanges ?
 			_repositoryContext.Set<T>()
-				.Where(expression)
+				.Where(condition)
 				.AsNoTracking() :
 			_repositoryContext.Set<T>()
-				.Where(expression);
+				.Where(condition);
 }

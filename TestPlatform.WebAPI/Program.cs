@@ -96,7 +96,6 @@ public class Program
 				dbContext.Database.Migrate();
 
 				var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-				var rolesManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
 				var adminUser = await userManager.FindByEmailAsync("admin@gmail.com");
 				await userManager.AddToRoleAsync(adminUser, "Administrator");

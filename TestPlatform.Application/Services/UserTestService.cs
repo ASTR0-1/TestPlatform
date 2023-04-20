@@ -22,8 +22,8 @@ public class UserTestService : IUserTestService
 
 	public async Task<IEnumerable<UserTestDTO>> GetByTestIdAsync(int testId)
 	{
-		Test test = await _repository.Test.GetTestAsync(testId, false)
-			?? throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
+		if (await _repository.Test.GetTestAsync(testId, false) is null)
+			throw new KeyNotFoundException($"Test with id '{testId}' doesn't exist");
 
 		var allUserTests = await _repository.UserTest.GetUserTestsAsync(trackChanges: false);
 		IEnumerable<UserTest> userTests = allUserTests.Where(ut => ut.TestId == testId);

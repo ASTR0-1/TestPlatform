@@ -11,10 +11,10 @@ public class TestRepository : RepositoryBase<Test>, ITestRepository
 	{ }
 
 	public void CreateTest(Test test) =>
-		CreateTest(test);
+		Create(test);
 
 	public void DeleteTest(Test test) =>
-		DeleteTest(test);
+		Delete(test);
 
 	public async Task<Test> GetTestAsync(int id, bool trackChanges) =>
 		await FindByCondition(t => t.Id == id, trackChanges)
@@ -30,5 +30,5 @@ public class TestRepository : RepositoryBase<Test>, ITestRepository
 			.ToListAsync();
 
 	public void UpdateTest(Test test) =>
-		UpdateTest(test);
+		Update(test);
 }
