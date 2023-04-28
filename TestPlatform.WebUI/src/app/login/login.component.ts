@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { UserForLogin } from 'src/app/entities/userForLogin';
 import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'login',
@@ -15,7 +16,7 @@ import { AuthService } from '../services/auth.service';
     providers: [AuthService],
 })
 export class LoginComponent {
-    invalidLogin?: boolean;
+    isInvalidLogin$!: Observable<boolean>;
     url = configurl.apiServer.url + '/api/account/';
     userForLogin: UserForLogin = new UserForLogin();
 
@@ -23,30 +24,12 @@ export class LoginComponent {
         private router: Router,
         private jwtHelper: JwtHelperService,
         private authService: AuthService
-    ) {}
+    ) {
+        this.isInvalidLogin$ = this.authService.isInvalidLogin$;
+    }
 
     public login = (form: NgForm) => {
-        this.authService.signIn(this.userForLogin).subscribe({
-            next: (response) => {
-                const token = (<any>response).token;
-                const userEmail = (<any>response).user.email;
-                const userName = (<any>response).user.firstName;
-                const userRoles = (<any>response).roles;
-
-                localStorage.setItem('jwt', token);
-                localStorage.setItem('userEmail', userEmail);
-                localStorage.setItem('userName', userName);
-                localStorage.setItem('userRoles', userRoles);
-
-                this.invalidLogin = false;
-                this.router.navigate(['']);
-            },
-            error: (err) => {
-                this.invalidLogin = true;
-            },
-        });
-
-        console.log(localStorage);
+        this.authService.signIn(this.userForLogin);
     };
 
     isUserAuthenticated() {

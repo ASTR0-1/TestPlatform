@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import configurl from 'src/assets/config.json';
 
 @Injectable()
@@ -8,7 +9,7 @@ export class TestService {
 
     constructor(private http: HttpClient) {}
 
-    getTestResult(testId: number, answers: number[]) {
+    getTestResult(testId: number, answers: number[]): Observable<number> {
         const answerString = answers
             .map((answer, index) => {
                 const prefix = index === 0 ? '?' : '&';
@@ -17,9 +18,15 @@ export class TestService {
             .join('');
         const endpoint = `${this.url}/${testId}/result${answerString}`;
 
-        return this.http.get(endpoint, {
-            observe: 'response',
-            withCredentials: true,
-        });
+        return this.http
+            .get<number>(endpoint, {
+                observe: 'response',
+                withCredentials: true,
+            })
+            .pipe(
+                map((response) => {
+                    return response.body as number;
+                })
+            );
     }
 }

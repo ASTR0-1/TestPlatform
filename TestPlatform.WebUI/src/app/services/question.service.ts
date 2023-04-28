@@ -1,6 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import configurl from 'src/assets/config.json';
+import { Question } from '../entities/question';
 
 @Injectable()
 export class QuestionService {
@@ -8,10 +10,16 @@ export class QuestionService {
 
     constructor(private http: HttpClient) {}
 
-    getTestQuestions(testId: number) {
-        return this.http.get(this.url + 'questions' + `?testId=${testId}`, {
-            observe: 'response',
-            withCredentials: true,
-        });
+    getTestQuestions(testId: number): Observable<Question[]> {
+        return this.http
+            .get<Question[]>(this.url + 'questions' + `?testId=${testId}`, {
+                observe: 'response',
+                withCredentials: true,
+            })
+            .pipe(
+                map((resp) => {
+                    return resp.body || [];
+                })
+            );
     }
 }

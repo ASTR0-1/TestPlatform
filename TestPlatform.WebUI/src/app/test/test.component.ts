@@ -1,10 +1,10 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Question } from '../entities/question';
 import { QuestionService } from '../services/question.service';
 import { TestService } from '../services/test.service';
+import { Observable, catchError, of } from 'rxjs';
 
 @Component({
     selector: 'test',
@@ -15,12 +15,13 @@ import { TestService } from '../services/test.service';
 export class TestComponent implements OnInit {
     testId: number = 0;
 
-    result: number = 0;
+    result$: Observable<number | null> = of(null);
+    questions$!: Observable<Question[]>;
+
     answers: number[] = [];
 
     questionCount: number = 0;
     currentQuestionNumber: number = 0;
-    questions: Question[] = [];
 
     form = new FormGroup({ option: new FormControl('', Validators.required) });
 
@@ -41,10 +42,6 @@ export class TestComponent implements OnInit {
         }
     }
 
-    get f() {
-        return this.form.controls;
-    }
-
     submit() {
         this.answers.push(Number(this.form.value.option));
 
@@ -62,16 +59,20 @@ export class TestComponent implements OnInit {
     }
 
     getResult() {
-        this.testService
-            .getTestResult(this.testId, this.answers)
-            .subscribe((resp) => {
-                this.result = <number>resp.body;
-            });
+        this.result$ = this.testService.getTestResult(
+            this.testId,
+            this.answers
+        );
     }
 
     private loadQuestions(): void {
-        this.questionService.getTestQuestions(this.testId).subscribe((resp) => {
-            this.questions = <Question[]>resp.body;
-        });
+        this.questions$ = this.questionService
+            .getTestQuestions(this.testId)
+            .pipe(
+                catchError((error) => {
+                    console.error(error);
+                    return of([]);
+                })
+            );
     }
 }

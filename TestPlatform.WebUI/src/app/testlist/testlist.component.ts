@@ -5,6 +5,7 @@ import { Test } from '../entities/test';
 import { UserTest } from '../entities/userTest';
 
 import { UserTestService } from '../services/userTest.service';
+import { Observable, map, of } from 'rxjs';
 
 @Component({
     selector: 'test-list',
@@ -13,10 +14,10 @@ import { UserTestService } from '../services/userTest.service';
     providers: [UserTestService],
 })
 export class TestListComponent implements OnInit {
-    private unfilteredUserTests: UserTest[] = [];
+    private unfilteredUserTests$!: Observable<UserTest[]>;
 
-    userTests: UserTest[] = [];
-    completedUserTests: UserTest[] = [];
+    userTests$!: Observable<UserTest[]>;
+    completedUserTests$!: Observable<UserTest[]>;
 
     constructor(
         private userTestService: UserTestService,
@@ -24,14 +25,18 @@ export class TestListComponent implements OnInit {
     ) {}
 
     async ngOnInit(): Promise<void> {
-        await this.loadUserTests();
+        this.loadUserTests();
 
-        this.userTests = this.unfilteredUserTests.filter(
-            (t) => t.isCompleted == false
+        this.userTests$ = this.unfilteredUserTests$.pipe(
+            map((userTests: UserTest[]) =>
+                userTests.filter((t) => t.isCompleted === false)
+            )
         );
 
-        this.completedUserTests = this.unfilteredUserTests.filter(
-            (t) => t.isCompleted == true
+        this.completedUserTests$ = this.unfilteredUserTests$.pipe(
+            map((userTests: UserTest[]) =>
+                userTests.filter((t) => t.isCompleted === true)
+            )
         );
     }
 
@@ -41,9 +46,7 @@ export class TestListComponent implements OnInit {
         });
     }
 
-    private async loadUserTests() {
-        await this.userTestService.getUserTests().then((resp) => {
-            this.unfilteredUserTests = <UserTest[]>resp?.body;
-        });
+    private loadUserTests() {
+        this.unfilteredUserTests$ = this.userTestService.getUserTests();
     }
 }
