@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { TestListComponent } from './testlist/testlist.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { TestComponent } from './test/test.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
     { path: '', component: HomepageComponent },
@@ -57,6 +58,7 @@ export function tokenGetter() {
                 allowedDomains: ['localhost:7152'],
             },
         }),
+        BrowserAnimationsModule,
     ],
     providers: [AuthGuard],
     bootstrap: [AppComponent],
