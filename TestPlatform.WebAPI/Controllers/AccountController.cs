@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using TestPlatform.Application.DTOs;
@@ -15,12 +16,15 @@ public class AccountController : ControllerBase
 	private readonly JwtSettings _jwtSettings;
 	private readonly IAuthService _authService;
 	private readonly IRoleService _roleService;
+	private readonly UserManager<User> _userManager;
 
-	public AccountController(IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService, IRoleService roleService)
+	public AccountController(IOptionsSnapshot<JwtSettings> jwtSettings, IAuthService authService,
+		IRoleService roleService, UserManager<User> userManager)
 	{
 		_jwtSettings = jwtSettings.Value;
 		_authService = authService;
 		_roleService = roleService;
+		_userManager = userManager;
 	}
 
 	[HttpPost("signIn")]
@@ -39,6 +43,9 @@ public class AccountController : ControllerBase
 	{
 		User user = await _authService.SignUp(signUpDTO);
 		var roles = await _roleService.GetUserRoles(user.Email);
+
+		if (signUpDTO.IsAdmin)
+			await _userManager.AddToRoleAsync(user, "Administrator");
 
 		string token = JwtHelper.GenerateJwt(user, roles, _jwtSettings);
 
