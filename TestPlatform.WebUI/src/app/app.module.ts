@@ -5,23 +5,26 @@ import { Routes, RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { LoginComponent } from './login/login.component';
+
+import { LoginComponent } from './authentication/login/login.component';
+import { RegistrationComponent } from './authentication/registration/registration.component';
+
 import { TestListComponent } from './testlist/testlist.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { TestComponent } from './test/test.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
-    { path: '', component: HomepageComponent },
-    { path: 'login', component: LoginComponent },
     {
-        path: 'testlist',
+        path: '',
         component: TestListComponent,
         canActivate: [AuthGuard],
     },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegistrationComponent },
     {
         path: 'confirmation',
         component: ConfirmationComponent,
@@ -41,8 +44,8 @@ export function tokenGetter() {
 @NgModule({
     declarations: [
         AppComponent,
-        HomepageComponent,
         LoginComponent,
+        RegistrationComponent,
         TestListComponent,
         TestComponent,
     ],
@@ -59,6 +62,7 @@ export function tokenGetter() {
             },
         }),
         BrowserAnimationsModule,
+        MatIconModule,
     ],
     providers: [AuthGuard],
     bootstrap: [AppComponent],

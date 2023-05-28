@@ -1,18 +1,31 @@
-<div>
+<div class="h-100">
     <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark p-3">
-        <a class="navbar-brand" href="#">Test Platform</a>
-        <div class="collapse navbar-collapse" id="navbarText">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <mat-icon>border_color</mat-icon>
+            <span>Test Platform</span>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarText" *ngIf="isUserAuthenticated()">
             <ul class="navbar-nav mr-auto">
-                <li *ngIf="isUserAuthenticated()" class="nav-item">
-                    <a class="nav-link">Welcome {{ userName }}</a>
+                <li class="nav-item">
+                    <a class="nav-link">{{(getUserNameFromLocalStorage() | async) || 'Welcome' }}</a>
                 </li>
-                <li *ngIf="isUserAuthenticated()" class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" (click)="logOut()">Logout</a>
                 </li>
             </ul>
         </div>
+        <div class="collapse navbar-collapse" id="navbarText" *ngIf="!isUserAuthenticated()">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="register">Register</a>
+                </li>
+            </ul>
+        </div>
     </nav>
-    <div class="d-flex justify-content-center">
+    <div class="component-wrapper d-flex justify-content-center align-items-center h-75">
         <router-outlet></router-outlet>
     </div>
 </div>

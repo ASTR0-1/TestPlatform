@@ -1,0 +1,5 @@
+.component-wrapper {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10vh 30vh 0 30vh;
+}

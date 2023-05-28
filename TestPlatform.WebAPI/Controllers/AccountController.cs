@@ -41,6 +41,9 @@ public class AccountController : ControllerBase
 	[HttpPost("signUp")]
 	public async Task<IActionResult> SignUp([FromBody] SignUpDTO signUpDTO)
 	{
+		if (signUpDTO.Password != signUpDTO.ConfirmPassword)
+			return BadRequest();
+
 		User user = await _authService.SignUp(signUpDTO);
 		var roles = await _roleService.GetUserRoles(user.Email);
 

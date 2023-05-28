@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable, of } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -8,7 +9,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-    userName = localStorage.getItem('userName');
     title = 'Test Platform';
 
     constructor(private jwtHelper: JwtHelperService, private router: Router) {}
@@ -22,7 +22,17 @@ export class AppComponent {
         }
     }
 
+    public getUserNameFromLocalStorage(): Observable<any> {
+        const value = localStorage.getItem('userName');
+
+        return of("Welcome " + value);
+    }
+
     public logOut = () => {
         localStorage.removeItem('jwt');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+
+        this.router.navigateByUrl('/login');
     };
 }
