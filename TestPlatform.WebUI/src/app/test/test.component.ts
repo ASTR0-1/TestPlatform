@@ -14,11 +14,11 @@ import { Observable, catchError, of } from 'rxjs';
 })
 export class TestComponent implements OnInit {
     testId: number = 0;
-
-    result$: Observable<number | null> = of(null);
-    questions$!: Observable<Question[]>;
+    result: number | null = null;
 
     answers: number[] = [];
+
+    questions$!: Observable<Question[]>;
 
     questionCount: number = 0;
     currentQuestionNumber: number = 0;
@@ -59,9 +59,13 @@ export class TestComponent implements OnInit {
     }
 
     getResult() {
-        this.result$ = this.testService.getTestResult(
-            this.testId,
-            this.answers
+        this.testService.getTestResult(this.testId, this.answers).subscribe(
+            (result: number) => {
+                this.result = result;
+            },
+            (error: any) => {
+                console.error(error);
+            }
         );
     }
 

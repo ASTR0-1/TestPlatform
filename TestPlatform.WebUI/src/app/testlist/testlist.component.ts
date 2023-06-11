@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Test } from '../entities/test';
 import { UserTest } from '../entities/userTest';
 
 import { UserTestService } from '../services/userTest.service';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationComponent } from '../confirmation/confirmation.component';
 
 @Component({
     selector: 'test-list',
@@ -21,7 +22,7 @@ export class TestListComponent implements OnInit {
 
     constructor(
         private userTestService: UserTestService,
-        private router: Router
+        public dialog: MatDialog
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -40,9 +41,11 @@ export class TestListComponent implements OnInit {
         );
     }
 
-    confirm(test?: Test) {
-        this.router.navigateByUrl('confirmation', {
-            state: { test: test },
+    confirmDialog(test?: Test) {
+        this.dialog.open(ConfirmationComponent, {
+            height: '250px',
+            width: '500px',
+            data: test,
         });
     }
 

@@ -3,7 +3,7 @@
 
     <div *ngIf="questions.length > 0">
         <div
-            *ngIf="!(result$ | async)"
+            *ngIf="result === null"
             class="test-container container d-flex flex-column justify-content-center align-text-center mt-4 p-3 rounded gap-2"
         >
             <h3>{{ questions[currentQuestionNumber].questionText }}</h3>
@@ -61,7 +61,7 @@
         </div>
         <div
             class="test-container container d-flex flex-column justify-content-center align-text-center mt-4 p-3 rounded gap-2"
-            *ngIf="result$ | async as result"
+            *ngIf="result !== null"
         >
             <p>Your test result is: {{ result }}</p>
             <button class="btn btn-info" (click)="back()">

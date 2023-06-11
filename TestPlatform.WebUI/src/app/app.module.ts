@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 
@@ -46,8 +48,8 @@ export function tokenGetter() {
         AppComponent,
         LoginComponent,
         RegistrationComponent,
-        TestListComponent,
         TestComponent,
+        TestListComponent,
     ],
     imports: [
         BrowserModule,
@@ -63,6 +65,8 @@ export function tokenGetter() {
         }),
         BrowserAnimationsModule,
         MatIconModule,
+        MatDialogModule,
+        MatButtonModule
     ],
     providers: [AuthGuard],
     bootstrap: [AppComponent],
